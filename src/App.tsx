@@ -1,13 +1,15 @@
 import '@mantine/core/styles.css';
+import '@mantine/dates/styles.css';
 
 import { MantineProvider } from '@mantine/core';
-import { Router } from './Router';
+import { AssessmentForm } from './features/assessment/AssessmentForm';
+import { saveAssessment } from './features/assessment/saveAssessment';
 import { theme } from './theme';
 
 export default function App() {
   return (
     <MantineProvider theme={theme}>
-      <Router />
+      <AssessmentForm onSave={saveAssessment} />
     </MantineProvider>
   );
 }
