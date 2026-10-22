@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { useState } from 'react';
 import {
   Alert,
@@ -48,7 +49,7 @@ const toLabel = (value: string) => {
 };
 const mobilityOptions = MOBILITY.map((value) => ({ value, label: toLabel(value) }));
 
-const today = new Date().toISOString().slice(0, 10);
+const today = dayjs().format('YYYY-MM-DD');
 
 interface AssessmentFormProps {
   onSave: (assessment: Assessment) => Promise<void>;

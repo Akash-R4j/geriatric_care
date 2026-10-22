@@ -24,7 +24,7 @@ yarn test       # typecheck, lint, format check, stylelint, vitest, build
 - **No silent changes to numbers:** `NumberInput` uses `clampBehavior="none"`, so `105` or `82` stays as typed and is rejected by the schema instead of being clamped.
 - **`assessmentDate` max** is computed from the browser's current date.
 - **Deployment (Vercel):** `vercel.json` sets `ENABLE_EXPERIMENTAL_COREPACK=1` so Vercel uses Yarn 4 (the template uses `catalog:`, which Yarn 1 can't install). I also removed `"type": "module"` from `package.json`: Corepack caches Yarn inside the project, and with that flag Node loaded its CommonJS `yarn.js` as ESM and crashed. The template's config files already use explicit `.mjs`/`.cjs` extensions, so nothing else needed it.
-- **Template changes:** removed the demo components, router and Storybook. The stylelint script now uses double quotes (single quotes fail on Windows) and `--allow-empty-input` (the project has no CSS files). No lint or format config was removed.
+- **Template changes:** removed the demo components, router and Storybook (with its scripts and dependencies). The stylelint script now uses double quotes (single quotes fail on Windows) and `--allow-empty-input` (the project has no CSS files). No lint or format config was removed.
 
 ## Not done
 
