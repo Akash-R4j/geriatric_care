@@ -1,7 +1,8 @@
 {
   "build": {
     "env": {
-      "ENABLE_EXPERIMENTAL_COREPACK": "1"
+      "ENABLE_EXPERIMENTAL_COREPACK": "1",
+      "COREPACK_HOME": "/tmp/corepack"
     }
   },
   "outputDirectory": "dist"
