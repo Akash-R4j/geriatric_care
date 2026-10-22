@@ -1,44 +1,35 @@
-# Mantine Vite template
+# Geriatric Care Assessment Form
 
-## Features
+One-page assessment form for a visiting nurse. React 19, TypeScript, Mantine, `@mantine/form`, Zod 4.
 
-This template comes with the following features:
+**Live URL:** _TODO: add deployed URL_
 
-- [PostCSS](https://postcss.org/) with [mantine-postcss-preset](https://mantine.dev/styles/postcss-preset)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Storybook](https://storybook.js.org/)
-- [Vitest](https://vitest.dev/) setup with [React Testing Library](https://testing-library.com/docs/react-testing-library/intro)
-- [Vite+](https://viteplus.dev/) unified toolchain: Vite, Vitest, Oxlint and Oxfmt are run with `vp` and configured in `vite.config.mjs`
+## Run
 
-## Vite+ CLI
+```
+yarn install
+yarn dev        # dev server
+yarn test       # typecheck, lint, format check, stylelint, vitest, build
+```
 
-The template works without any global installation: `vp` is installed as a dev dependency and all npm scripts use it.
+## Layout
 
-Optionally, you can install the [global `vp` CLI](https://viteplus.dev/guide/global-cli).
-It automatically switches to the Node.js version pinned in `.node-version` and lets you run commands directly, for example `vp dev` or `vp check --fix` instead of `yarn vp check --fix`.
+- `src/features/assessment/schema.ts` – the given Zod schema; the only place rules live.
+- `AssessmentForm.tsx` – the form. Validation is `schemaResolver(assessmentSchema)`.
+- `fixtures.ts` – the invented sample patient. `saveAssessment.ts` – fake 800ms save.
 
-## npm scripts
+## Decisions
 
-## Build and dev scripts
+- **Input vs output type:** `FormValues` is a mapped type over `Assessment` (numbers may be blank, dates and mobility may be `null`). On a valid submit, `transformValues` runs `assessmentSchema.parse`, so the save handler and the success `Code` block get Zod's output, not form state.
+- **No silent changes to numbers:** `NumberInput` uses `clampBehavior="none"`, so `105` or `82` stays as typed and is rejected by the schema instead of being clamped.
+- **`assessmentDate` max** is computed from the browser's current date.
+- **Template changes:** removed the demo components, router and Storybook. The stylelint script now uses double quotes (single quotes fail on Windows) and `--allow-empty-input` (the project has no CSS files). No lint or format config was removed.
 
-- `dev` – start development server
-- `build` – build production version of the app
-- `build:analyze` – build the app and open bundle size visualization (`dist/stats.html`)
-- `preview` – locally preview production build
+## Not done
 
-### Testing scripts
+- Deployment URL still to add.
+- Only the two requested tests; the other fixture cases were checked by hand (an empty submit gives exactly 9 errors).
 
-- `check` – checks formatting, lint rules and TypeScript types with `vp check`
-- `check:fix` – same as `check`, fixes formatting and auto-fixable lint errors
-- `typecheck` – checks TypeScript types
-- `lint` – runs oxlint and stylelint
-- `format:test` – checks files with oxfmt
-- `vitest` – runs vitest tests
-- `vitest:watch` – starts vitest watch
-- `test` – runs `check`, `stylelint`, `vitest` and `build` scripts
+## Time
 
-### Other scripts
-
-- `storybook` – starts storybook dev server
-- `storybook:build` – build production storybook bundle to `storybook-static`
-- `format:write` – formats all files with oxfmt
+Roughly 1 hour.
